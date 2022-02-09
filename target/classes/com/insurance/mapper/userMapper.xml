@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.insurance.mapper.userDao">
+
+    <select id="queryUserOne" parameterType="String" resultType="com.insurance.bean.User">
+        select * from cuser where Userid=#{Userid}
+    </select>
+    
+    <select id="queryUser" parameterType="String" resultType="com.insurance.bean.User">
+        select * from cuser where Userid=#{Userid}
+    </select>
+
+    <select id="findall" resultType="com.insurance.bean.User">
+		select * from cuser
+	</select>
+
+    <delete id="deleteUserById" parameterType="String">
+        delete from cuser where Userid=#{Userid}
+    </delete>
+
+    <delete id="deleteUserByIds" parameterType="list">
+	delete from cuser where Userid in
+	<foreach collection="list" item="Userid" open="(" close=")" separator=",">
+		#{Userid}
+	</foreach>
+  </delete>
+
+  <insert id="insertUser" parameterType="com.insurance.bean.User">
+        insert into cuser(Userid,password,name,sex,institutions,createTime,uppTime) values(#{Userid},#{password}, #{name}, #{sex}, #{institutions}, #{createTime},#{uppTime})
+    </insert>
+
+    <update id="updateUser" parameterType="com.insurance.bean.User">
+        update cuser set name=#{name}, institutions=#{institutions}, sex=#{sex} where Userid=#{Userid}
+    </update>
+    
+    <update id="updatepassword" parameterType="com.insurance.bean.User">
+        update cuser set password=#{password},uppTime=#{uppTime} where Userid=#{Userid}
+    </update>
+    </mapper>

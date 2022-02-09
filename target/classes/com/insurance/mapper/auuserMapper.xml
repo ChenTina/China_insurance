@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.insurance.mapper.auuserDao">
+
+    <select id="queryAUuser" parameterType="String" resultType="java.util.HashMap">
+        select Userid,TRight.url,urlName,AUtime from AUuser,TRight where TRight.menuId=AUuser.url  and Userid=#{Userid}
+        
+    </select>
+    
+    <select id="queryurl" parameterType="String" resultType="String">
+        select TRight.url from AUuser,TRight where TRight.menuId=AUuser.url  and Userid=#{Userid}
+        
+    </select>
+    
+     <insert id="insertAUuser" parameterType="com.insurance.bean.AUuser">
+        insert into AUuser(Userid,url,AUtime) values(#{Userid},#{url}, #{AUtime})
+    </insert>
+    
+    <delete id="deleteAUuserUserid" parameterType="com.insurance.bean.AUuser">
+        delete from AUuser where Userid=#{Userid} and url=#{url}
+    </delete>
+    
+    <select id="findall" resultType="java.util.HashMap">
+		select AUuser.Userid,name,urlName,AUtime from AUuser,TRight,cuser where AUuser.url=TRight.menuId and AUuser.Userid=cuser.Userid
+	</select>
+	
+	<insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
+        INSERT INTO AUuser (Userid,url,AUtime)
+        VALUES
+        <foreach collection="list"  separator="," item="item">
+            (#{item.Userid,jdbcType=VARCHAR},
+             #{item.url,jdbcType=INTEGER},
+             #{item.AUtime,jdbcType=DATE}
+      		)
+        </foreach>
+    </insert>
+    
+    </mapper>

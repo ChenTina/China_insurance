@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.insurance.mapper.trightDao">
+
+    <select id="queryTRightOne" parameterType="String" resultType="com.insurance.bean.TRight">
+        select * from TRight where menuId=#{menuId}
+    </select>
+
+    <select id="findall" resultType="com.insurance.bean.TRight">
+		select * from TRight
+	</select>
+
+    <delete id="deleteTRightById" parameterType="String">
+        delete from TRight where menuId=#{menuId}
+    </delete>
+
+    <delete id="deleteTRightByIds" parameterType="list">
+	delete from TRight where menuId in
+	<foreach collection="list" item="menuId" open="(" close=")" separator=",">
+		#{menuId}
+	</foreach>
+  </delete>
+
+  <insert id="insertTRight" parameterType="com.insurance.bean.TRight">
+        insert into TRight(urlName,url) values(#{urlName}, #{url})
+    </insert>
+
+    <update id="updateTRight" parameterType="com.insurance.bean.TRight">
+        update TRight set urlName=#{urlName}, url=#{url} where menuId=#{menuId}
+    </update>
+    
+    <select id="queryTRight" parameterType="String" resultType="com.insurance.bean.TRight">
+        select * from TRight where menuId=#{menuId}
+    </select>
+    
+    <select id="queryright" parameterType="String" resultType="java.util.HashMap">
+    	select menuId,urlName from TRight where menuId not in (select menuId from AUuser,TRight where Userid=#{Userid} and menuId=AUuser.url ) 
+    </select>
+    
+     <select id="queryrightss" parameterType="String" resultType="com.insurance.bean.TRight">
+    	select menuId,urlName from TRight where not in (select menuId from AUuser,TRight where Userid=#{Userid} and menuId=AUuser.url ) 
+    </select> 
+    
+    </mapper>
